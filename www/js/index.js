@@ -36,8 +36,11 @@ var app = {
         })
         WifiWizard.getScanResults(function (data) {
             console.log(data)
+            data = data.filter(function(a) {
+                return a.SSID === "eduroam" // This is why the name is EduNav
+            })
             data.sort(function(a, b) {
-                return parseInt(a.level,10) < parseInt(b.level,10)
+                return Math.abs(parseInt(a.level,10)) - Math.abs(parseInt(b.level,10))
             })
             writeNetworks(data)
         }, function (data) {
