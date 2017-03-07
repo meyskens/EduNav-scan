@@ -1,0 +1,10 @@
+<ion-view view-title="EduNav Scan">
+  <ion-content>
+    <h3 ng-show="error">{{error}}</h3>
+    <ion-list ng-hide="error">
+      <ion-item ng-repeat="ap in baseStations">
+        {{ap.level}} - {{ap.BSSID}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
