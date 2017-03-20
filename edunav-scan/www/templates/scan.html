@@ -2,6 +2,9 @@
   <ion-content>
     <h3 ng-show="error">{{error}}</h3>
     <ion-list ng-hide="error">
+      <ion-item ng-if="baseStations.length == 0">
+        No Eduroam APs found!
+      </ion-item>
       <ion-item ng-repeat="ap in baseStations">
         {{ap.level}} - {{ap.BSSID}}
       </ion-item>
