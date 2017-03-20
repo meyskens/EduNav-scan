@@ -1,13 +1,50 @@
 angular.module('edunavscan.controllers').controller('AddRoomMapCtrl', addRoomMapController)
 
-addRoomMapController.$inject = ["$scope", "BackendService", "$ionicLoading", "$stateParams"];
+addRoomMapController.$inject = ["$scope", "BackendService", "$ionicLoading", "$stateParams", "$state"];
 
-function addRoomMapController($scope, BackendService, $ionicLoading, $stateParams) {
+function addRoomMapController($scope, BackendService, $ionicLoading, $stateParams, $state) {
     var canvas = document.getElementById("add-room-canvas")
-    canvas.width = document.documentElement.clientWidth;
-    canvas.height = document.documentElement.clientHeight
+    canvas.width = document.documentElement.clientWidth
+    canvas.height = document.documentElement.clientHeight // minus top bar
     var ctx = canvas.getContext("2d")
     var image = new Image();
+
+	// image starting points
+	var xStart
+	var yStart
+
+	var showOnCanvas = function() {
+		var imageAspectRatio = image.width / image.height
+		var canvasAspectRatio = canvas.width / canvas.height
+
+		var renderableHeight = canvas.height;
+		var renderableWidth = canvas.width;
+		xStart = 0;
+		yStart = 0;
+
+		if(imageAspectRatio < canvasAspectRatio) {
+			// fit on height
+			renderableHeight = canvas.height;
+			renderableWidth = image.width * (renderableHeight / image.height);
+			xStart = (canvas.width - renderableWidth) / 2;
+			yStart = 0;
+		}
+
+		if(imageAspectRatio > canvasAspectRatio) {
+			// fit on height
+			renderableWidth = canvas.width
+			renderableHeight = image.height * (renderableWidth / image.width);
+			xStart = 0;
+			yStart = (canvas.height - renderableHeight) / 2;
+		}
+		ctx.drawImage(image, xStart, yStart, renderableWidth, renderableHeight);
+	}
+
+	var drawCircle = function(x,y) {
+		ctx.beginPath();
+		ctx.arc(x + xStart, y + yStart, 10, 0, 2*Math.PI);
+		ctx.stroke()
+	}
 
     $ionicLoading.show({
       template: '<ion-spinner></ion-spinner>',
@@ -18,43 +55,16 @@ function addRoomMapController($scope, BackendService, $ionicLoading, $stateParam
             $scope.map = response.data;
             image.src = $scope.map.imageLocation
             image.onload = function() {
-                fitImageOn(ctx, canvas, image)
+                showOnCanvas()
                 $ionicLoading.hide()
             }
         })
-    });
+    })
+
+	canvas.addEventListener("click", function(event) {
+		var coords = { x: event.clientX - xStart, y: event.clientY - yStart - 45 } // also minus the navbar
+		console.log(coords)
+		drawCircle(coords.x, coords.y)
+		$state.go('app.addRoomInfo', { movieid: $stateParams.movieid + 1, mapID: $stateParams.id, x: coords.x, y: coords.y}); // TO DO: make those RELATIVE
+	})
 }
-
-// TO DO: improve and rewrite
-var fitImageOn = function(context, canvas, imageObj) {
-	var imageAspectRatio = imageObj.width / imageObj.height;
-	var canvasAspectRatio = canvas.width / canvas.height;
-	var renderableHeight, renderableWidth, xStart, yStart;
-
-	// If image's aspect ratio is less than canvas's we fit on height
-	// and place the image centrally along width
-	if(imageAspectRatio < canvasAspectRatio) {
-		renderableHeight = canvas.height;
-		renderableWidth = imageObj.width * (renderableHeight / imageObj.height);
-		xStart = (canvas.width - renderableWidth) / 2;
-		yStart = 0;
-	}
-
-	// If image's aspect ratio is greater than canvas's we fit on width
-	// and place the image centrally along height
-	else if(imageAspectRatio > canvasAspectRatio) {
-		renderableWidth = canvas.width
-		renderableHeight = imageObj.height * (renderableWidth / imageObj.width);
-		xStart = 0;
-		yStart = (canvas.height - renderableHeight) / 2;
-	}
-
-	// Happy path - keep aspect ratio
-	else {
-		renderableHeight = canvas.height;
-		renderableWidth = canvas.width;
-		xStart = 0;
-		yStart = 0;
-	}
-	context.drawImage(imageObj, xStart, yStart, renderableWidth, renderableHeight);
-};

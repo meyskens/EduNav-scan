@@ -56,6 +56,16 @@ angular.module('edunavscan', ['ionic', 'ngCordova', 'edunavscan.controllers', 'e
     },
   })
 
+  .state('app.addRoomInfo', {
+    url: '/add-room-info/:mapID/:x/:y',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/add-room-info.html',
+        controller:"AddRoomInfoCtrl"
+      }
+    },
+  })
+
  .state('app.debug', {
     url: '/debug',
     views: {
