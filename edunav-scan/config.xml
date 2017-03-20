@@ -76,4 +76,5 @@
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
     <plugin name="cordova-plugin-android-permissions" spec="~0.10.0" />
     <plugin name="com.pylonproducts.wifiwizard" spec="https://github.com/meyskens/WifiWizard.git" />
+    <plugin name="cordova-plugin-battery-status" spec="~1.2.3" />
 </widget>

@@ -1,4 +1,4 @@
-angular.module('edunavscan', ['ionic', 'edunavscan.controllers'])
+angular.module('edunavscan', ['ionic', 'ngCordova', 'edunavscan.controllers', 'edunavscan.services'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -32,6 +32,26 @@ angular.module('edunavscan', ['ionic', 'edunavscan.controllers'])
       'menuContent': {
         templateUrl: 'templates/scan.html',
         controller:"ScanCtrl"
+      }
+    },
+  })
+
+  .state('app.addRoom', {
+    url: '/add-room',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/add-room.html',
+        controller:"AddRoomCtrl"
+      }
+    },
+  })
+
+  .state('app.addRoomMap', {
+    url: '/add-room-map/:id',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/add-room-map.html',
+        controller:"AddRoomMapCtrl"
       }
     },
   })
