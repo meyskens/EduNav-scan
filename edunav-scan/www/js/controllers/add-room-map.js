@@ -5,7 +5,7 @@ addRoomMapController.$inject = ["$scope", "BackendService", "$ionicLoading", "$s
 function addRoomMapController($scope, BackendService, $ionicLoading, $stateParams, $state) {
     var canvas = document.getElementById("add-room-canvas")
     canvas.width = document.documentElement.clientWidth
-    canvas.height = document.documentElement.clientHeight // minus top bar
+    canvas.height = document.documentElement.clientHeight - 50 // minus top bar + make unscrollable
     var ctx = canvas.getContext("2d")
     var image = new Image();
 
