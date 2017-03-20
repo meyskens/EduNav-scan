@@ -56,6 +56,15 @@ angular.module('edunavscan', ['ionic', 'ngCordova', 'edunavscan.controllers', 'e
     },
   })
 
+ .state('app.debug', {
+    url: '/debug',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/debug.html',
+        controller:"DebugCtrl"
+      }
+    },
+  })
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/scan');
 });
