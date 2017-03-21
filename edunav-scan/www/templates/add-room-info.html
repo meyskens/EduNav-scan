@@ -1,5 +1,18 @@
 <ion-view view-title="Room info">
+  <ion-nav-buttons side="right">
+    <button class="button button-clear" ng-click="save()">Save</button>
+  </ion-nav-buttons>
   <ion-content>
-    TO DO!!!
+    <div class="list">
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Room name</span>
+        <input type="text" placeholder="Room name" ng-model="roomInfo.name">
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Comment</span>
+        <input type="text" placeholder="Comment" ng-model="roomInfo.comment">
+      </label>
+  
+    </div>
   </ion-content>
 </ion-view>
