@@ -12,32 +12,34 @@ function addRoomMapController($scope, BackendService, $ionicLoading, $stateParam
 	// image starting points
 	var xStart
 	var yStart
+	var imageWidth
+	var imageHeight
 
 	var showOnCanvas = function() {
 		var imageAspectRatio = image.width / image.height
 		var canvasAspectRatio = canvas.width / canvas.height
 
-		var renderableHeight = canvas.height;
-		var renderableWidth = canvas.width;
+		var imageWidth = canvas.height;
+		var imageHeight = canvas.width;
 		xStart = 0;
 		yStart = 0;
 
 		if(imageAspectRatio < canvasAspectRatio) {
 			// fit on height
-			renderableHeight = canvas.height;
-			renderableWidth = image.width * (renderableHeight / image.height);
-			xStart = (canvas.width - renderableWidth) / 2;
+			imageHeight = canvas.height;
+			imageWidth = image.width * (imageHeight / image.height);
+			xStart = (canvas.width - imageWidth) / 2;
 			yStart = 0;
 		}
 
 		if(imageAspectRatio > canvasAspectRatio) {
 			// fit on height
-			renderableWidth = canvas.width
-			renderableHeight = image.height * (renderableWidth / image.width);
+			imageWidth = canvas.width
+			imageHeight = image.height * (imageWidth / image.width);
 			xStart = 0;
-			yStart = (canvas.height - renderableHeight) / 2;
+			yStart = (canvas.height - imageHeight) / 2;
 		}
-		ctx.drawImage(image, xStart, yStart, renderableWidth, renderableHeight);
+		ctx.drawImage(image, xStart, yStart, imageWidth, imageHeight);
 	}
 
 	var drawCircle = function(x,y) {
@@ -62,7 +64,7 @@ function addRoomMapController($scope, BackendService, $ionicLoading, $stateParam
     })
 
 	canvas.addEventListener("click", function(event) {
-		var coords = { x: event.clientX - xStart, y: event.clientY - yStart - 45 } // also minus the navbar
+		var coords = { x: (event.clientX - xStart) / imageWidth, y: (event.clientY - yStart - 45) / imageHeight } // also minus the navbar
 		console.log(coords)
 		drawCircle(coords.x, coords.y)
 		$state.go('app.addRoomInfo', { movieid: $stateParams.movieid + 1, mapID: $stateParams.id, x: coords.x, y: coords.y}); // TO DO: make those RELATIVE
