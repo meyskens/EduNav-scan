@@ -19,8 +19,8 @@ function addRoomMapController($scope, BackendService, $ionicLoading, $stateParam
 		var imageAspectRatio = image.width / image.height
 		var canvasAspectRatio = canvas.width / canvas.height
 
-		var imageWidth = canvas.height;
-		var imageHeight = canvas.width;
+		imageWidth = canvas.height;
+		imageHeight = canvas.width;
 		xStart = 0;
 		yStart = 0;
 
@@ -44,7 +44,7 @@ function addRoomMapController($scope, BackendService, $ionicLoading, $stateParam
 
 	var drawCircle = function(x,y) {
 		ctx.beginPath();
-		ctx.arc(x + xStart, y + yStart, 10, 0, 2*Math.PI);
+		ctx.arc(x * imageWidth + xStart, y * imageHeight + yStart, 10, 0, 2*Math.PI);
 		ctx.stroke()
 	}
 
@@ -64,7 +64,7 @@ function addRoomMapController($scope, BackendService, $ionicLoading, $stateParam
     })
 
 	canvas.addEventListener("click", function(event) {
-		var coords = { x: (event.clientX - xStart) / imageWidth, y: (event.clientY - yStart - 45) / imageHeight } // also minus the navbar
+		var coords = { x: (event.clientX - xStart) / imageWidth, y: (event.clientY - yStart - 45.0) / imageHeight } // also minus the navbar
 		console.log(coords)
 		drawCircle(coords.x, coords.y)
 		$state.go('app.addRoomInfo', { movieid: $stateParams.movieid + 1, mapID: $stateParams.id, x: coords.x, y: coords.y}); // TO DO: make those RELATIVE
