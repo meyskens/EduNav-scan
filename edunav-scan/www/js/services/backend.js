@@ -15,6 +15,10 @@ function backendService($http) {
         return $http.get("https://edunav.eyskens.me/rooms/map/" + mapID);
     }
 
+    this.getAPsForMap = function(mapID) {
+        return $http.get("https://edunav.eyskens.me/basestations/map/" + mapID);
+    }
+
     this.addRoom = function(mapID, x, y, name, comment) {
         var keysURL = "keys.json"
         if(ionic.Platform.isAndroid()){
@@ -27,6 +31,21 @@ function backendService($http) {
                 y: parseFloat(y),
                 name: name,
                 comment: comment
+            });
+        });
+    }
+
+    this.addAPToMap = function(bssid, mapID, x, y) {
+        var keysURL = "keys.json"
+        if(ionic.Platform.isAndroid()){
+            keysURL = "/android_asset/www/" + keysURL
+        }
+        return $http.get(keysURL).success(function(keys){
+            $http.post("https://edunav.eyskens.me/basestations/" + keys.api + "/add", {
+                mapID: mapID,
+                x: parseFloat(x),
+                y: parseFloat(y),
+                bssid: bssid
             });
         });
         

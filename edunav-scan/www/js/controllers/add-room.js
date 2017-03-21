@@ -4,8 +4,7 @@ addRoomController.$inject = ["$scope", "BackendService", "$ionicLoading"];
 
 function addRoomController($scope, BackendService, $ionicLoading) {
     $ionicLoading.show({
-      template: '<ion-spinner></ion-spinner>',
-      duration: 3000
+      template: '<ion-spinner></ion-spinner>'
     })
     BackendService.getMaps().then((response) => {
         $scope.maps = response.data;

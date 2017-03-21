@@ -5,9 +5,10 @@
       <ion-item ng-if="baseStations.length == 0">
         No Eduroam APs found!
       </ion-item>
-      <ion-item ng-repeat="ap in baseStations">
+      <a ng-repeat="ap in baseStations" class="item item-icon-right" ng-href="#/app/add-ap/{{ap.BSSID}}">
         {{ap.level}} - {{ap.BSSID}}
-      </ion-item>
+        <i class="icon ion-chevron-right"></i>
+      </a>
     </ion-list>
   </ion-content>
 </ion-view>

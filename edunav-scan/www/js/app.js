@@ -66,6 +66,26 @@ angular.module('edunavscan', ['ionic', 'ngCordova', 'edunavscan.controllers', 'e
     },
   })
 
+  .state('app.addAP', {
+    url: '/add-ap/:bssid',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/add-ap.html',
+        controller:"AddAPCtrl"
+      }
+    },
+  })
+
+  .state('app.addAPMap', {
+    url: '/add-ap-map/:id/:bssid',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/add-ap-map.html',
+        controller:"AddAPMapCtrl"
+      }
+    },
+  })
+
  .state('app.debug', {
     url: '/debug',
     views: {
