@@ -49,8 +49,7 @@ function addRoomMapController($scope, BackendService, $ionicLoading, $stateParam
 	}
 
     $ionicLoading.show({
-      template: '<ion-spinner></ion-spinner>',
-      duration: 3000
+      template: '<ion-spinner></ion-spinner>'
     })
     $scope.$on( "$ionicView.loaded", function() {
         BackendService.getMap($stateParams.id).then((response) => {
@@ -58,7 +57,12 @@ function addRoomMapController($scope, BackendService, $ionicLoading, $stateParam
             image.src = $scope.map.imageLocation
             image.onload = function() {
                 showOnCanvas()
-                $ionicLoading.hide()
+                BackendService.getRoomsForMap($stateParams.id).then((response) => {
+            		for (room of response.data) { // to do look up ES6 compatibility of for of
+						drawCircle(room.x, room.y)
+					}
+					$ionicLoading.hide()
+            	})
             }
         })
     })

@@ -14,8 +14,7 @@ function addRoomInfoController($scope, BackendService, $ionicLoading, $statePara
             })
         }
         $ionicLoading.show({
-            template: '<ion-spinner></ion-spinner>',
-            duration: 3000
+            template: '<ion-spinner></ion-spinner>'
         })
         BackendService.addRoom($stateParams.mapID, $stateParams.x, $stateParams.y, $scope.roomInfo.name, $scope.roomInfo.comment).then((response) => {
             $ionicLoading.hide()

@@ -11,6 +11,10 @@ function backendService($http) {
         return $http.get("https://edunav.eyskens.me/maps/" + id);
     }
 
+    this.getRoomsForMap = function(mapID) {
+        return $http.get("https://edunav.eyskens.me/rooms/map/" + mapID);
+    }
+
     this.addRoom = function(mapID, x, y, name, comment) {
         var keysURL = "keys.json"
         if(ionic.Platform.isAndroid()){
