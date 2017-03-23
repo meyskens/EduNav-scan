@@ -3,6 +3,8 @@ angular.module('edunavscan.controllers').controller('AddRoomCtrl', addRoomContro
 addRoomController.$inject = ["$scope", "BackendService", "$ionicLoading"];
 
 function addRoomController($scope, BackendService, $ionicLoading) {
+    $scope.maps = []
+ 
     $ionicLoading.show({
       template: '<ion-spinner></ion-spinner>'
     })
@@ -11,5 +13,4 @@ function addRoomController($scope, BackendService, $ionicLoading) {
         $ionicLoading.hide()
         $scope.$apply()
     })
-    $scope.maps = []
 }
