@@ -1,1 +1,1 @@
-angular.module('edunavscan.services', [])
+angular.module("edunavscan.services", [])

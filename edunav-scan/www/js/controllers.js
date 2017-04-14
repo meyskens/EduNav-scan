@@ -1,4 +1,4 @@
-angular.module('edunavscan.controllers', []).controller('AppCtrl', function() {
+angular.module("edunavscan.controllers", []).controller("AppCtrl", function() {
 
 })
 
